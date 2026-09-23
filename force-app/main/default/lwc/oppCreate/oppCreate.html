@@ -1,0 +1,337 @@
+<template>
+    <template if:false={selectedRecordId}>
+    <lightning-card>
+        <div class="slds-grid slds-grid_align-spread">
+
+
+            <h1 class="slds-col slds-m-left_x-small">Opportunity Management System</h1>
+
+
+            <lightning-layout class="slds-col slds-m-right_x-small">
+
+                <!-- kanban view  -->
+                <lightning-button-group class="slds-m-right_medium slds-m-bottom_small">
+                    <lightning-button-icon icon-name="utility:list" variant={listViewVariant} onclick={switchToListView} alternative-text="List View"></lightning-button-icon>
+                    <lightning-button-icon icon-name="utility:kanban" variant={kanbanViewVariant} onclick={switchToKanbanView} alternative-text="Kanban View"></lightning-button-icon>
+                </lightning-button-group>
+
+                <lightning-button class="lightning-button-space" label="Update Stage" variant="brand"
+                    onclick={handleStage}> </lightning-button>
+                <lightning-button class="lightning-button-space" label="Assign Owner" variant="neutral"
+                    onclick={handleOwner}> </lightning-button>
+                <lightning-button class="lightning-button-space" label="Delete" variant="destructive"
+                    onclick={handleDelete}> </lightning-button>
+                <lightning-button class="lightning-button-space" label="Export" variant="neutral"
+                    onclick={handleExport}> </lightning-button>
+            </lightning-layout>
+
+
+        </div>
+
+
+
+
+        <div class="slds-grid slds-m-bottom_medium">
+            <div class=" slds-p-around_x-small">
+                <lightning-input type="search" variant="label-hidden" placeholder="Search Opportunities..."
+                    value={searchKey} onkeyup={handleSearch}>
+                </lightning-input>
+            </div>
+        </div>
+
+
+        <div class="slds-grid slds-grid_align-end slds-m-bottom_medium">
+            <div class=" slds-p-around_x-small">
+                <lightning-combobox
+                    name="stageDropdown"
+                    label="Stage Filter"
+                    placeholder="Select a stage"
+                    options={availableStageOptions}
+                    value={selectedStageDropdown}
+                    onchange={handleStageDropdownChange}
+                    class="stage-filter-dropdown">
+                </lightning-combobox>
+            </div>
+            <div class=" slds-p-around_x-small">
+                <lightning-combobox
+                    name="regionDropdown"
+                    label="Region Filter"
+                    placeholder="Select a region"
+                    options={availableRegionOptions}
+                    value={selectedRegionDropdown}
+                    onchange={handleRegionDropdownChange}
+                    class="region-filter-dropdown">
+                </lightning-combobox>
+            </div>
+            <div class=" slds-p-around_x-small">
+                <lightning-combobox
+                    name="ownerDropdown"
+                    label="Owner Filter"
+                    placeholder="Select an owner"
+                    options={availableOwnerOptions}
+                    value={ownerFilterValue}
+                    onchange={handleOwnerDropdownChange}
+                    class="owner-filter-dropdown">
+                </lightning-combobox>
+            </div>
+            <div class=" slds-p-around_x-small">
+                <lightning-combobox
+                    name="amountRange"
+                    label="Amount Range"
+                    placeholder="Select amount range"
+                    options={availableAmountOptions}
+                    value={selectedAmountRange}
+                    onchange={handleAmountChange}
+                    class="amount-filter-dropdown">
+                </lightning-combobox>
+            </div>
+            <div class=" slds-p-around_x-small">
+                <lightning-input
+                    type="date"
+                    label="Close Date"
+                    name="closeDate"
+                    value={closeDate}
+                    onchange={handleCloseDateChange}
+                    class="date-filter-input">
+                </lightning-input>
+            </div>
+        </div>
+
+
+        <template if:true={hasStageFilters}>
+            <div class="stage-pill-row slds-m-bottom_medium">
+                <template for:each={stageFilterValues} for:item="stageName">
+                    <span key={stageName} class="stage-pill">
+                        <span class="stage-pill-label" title={stageName}>{stageName}</span>
+                        <button type="button" class="stage-pill-remove" title="Remove" data-stage={stageName} onclick={handleStageFilterRemove}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Remove" size="xx-small"></lightning-icon>
+                            <span class="slds-assistive-text">Remove</span>
+                        </button>
+                    </span>
+                </template>
+            </div>
+        </template>
+
+
+        <template if:true={hasRegionFilters}>
+            <div class="region-pill-row slds-m-bottom_medium">
+                <template for:each={regionFilterValues} for:item="regionName">
+                    <span key={regionName} class="region-pill">
+                        <span class="region-pill-label" title={regionName}>{regionName}</span>
+                        <button type="button" class="region-pill-remove" title="Remove" data-region={regionName} onclick={handleRegionFilterRemove}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Remove" size="xx-small"></lightning-icon>
+                            <span class="slds-assistive-text">Remove</span>
+                        </button>
+                    </span>
+                </template>
+            </div>
+        </template>
+
+
+        <template if:true={hasOwnerFilters}>
+            <div class="owner-pill-row slds-m-bottom_medium">
+                <template for:each={ownerFilterPills} for:item="owner">
+                    <span key={owner.id} class="owner-pill">
+                        <span class="owner-pill-label" title={owner.label}>{owner.label}</span>
+                        <button type="button" class="owner-pill-remove" title="Remove" data-owner={owner.id} onclick={handleOwnerFilterRemove}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Remove" size="xx-small"></lightning-icon>
+                            <span class="slds-assistive-text">Remove</span>
+                        </button>
+                    </span>
+                </template>
+            </div>
+        </template>
+
+
+        <template if:true={hasAmountFilter}>
+            <div class="amount-pill-row slds-m-bottom_medium">
+                <span class="amount-pill">
+                    <span class="amount-pill-label" title={amountFilterPill.label}>{amountFilterPill.label}</span>
+                    <button type="button" class="amount-pill-remove" title="Remove" data-amount={amountFilterPill.id} onclick={handleAmountFilterRemove}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Remove" size="xx-small"></lightning-icon>
+                        <span class="slds-assistive-text">Remove</span>
+                    </button>
+                </span>
+            </div>
+        </template>
+
+        <!-- NEW: KANBAN VIEW -->
+        <template if:true={isKanbanView}>
+             <div class="kanban-container slds-m-around_small">
+                <template for:each={kanbanColumns} for:item="col">
+                    <div key={col.value} class="kanban-column slds-m-right_small">
+                
+                    <!-- Column Header -->
+                    <div class="kanban-column-header slds-grid slds-grid_align-spread">
+                        <span>{col.label}</span>
+                        <span class="slds-badge">{col.count}</span>
+                    </div>
+
+                    <!-- Column Body (Drop Zone) -->
+                    <div class="kanban-column-body" 
+                        data-stage={col.value} 
+                        ondrop={handleDrop} 
+                        ondragover={handleDragOver} 
+                        ondragleave={handleDragLeave}>
+                    
+                    <!-- Draggable Cards -->
+                    <template for:each={col.records} for:item="rec">
+                        <div key={rec.Id} class="kanban-card" 
+                            draggable="true" 
+                            data-id={rec.Id} 
+                            ondragstart={handleDragStart}
+                            onclick={handleKanbanCardClick}>
+                            
+                            <div class="kanban-card-title">{rec.Name}</div>
+                            <div class="slds-text-body_small slds-m-bottom_xx-small">{rec.AccountName}</div>
+                            
+                            <div class="slds-grid slds-grid_align-spread slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                <span>{rec.OwnerName}</span>
+                                <span>{rec.ProbabilityDisplay}</span>
+                            </div>
+                            <div class="slds-text-heading_small slds-m-top_xx-small">
+                                <strong>₹{rec.Amount}</strong>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                
+                </div>
+                </template>
+            </div>
+        </template>
+
+        <template if:false={isKanbanView}>
+        <lightning-datatable key-field="Id" data={opportunities} columns={columns} onrowselection={handleRowSelection} onrowaction={handleRowAction}>
+        </lightning-datatable>
+        </template>
+
+
+        <template if:true={showStageModal}>
+            <section class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">
+                            Update Opportunity Stage
+                        </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-combobox label="Select Stage" value={selectedStage} options={stageOptions}
+                            onchange={handleStageChange}>
+                        </lightning-combobox>
+                       
+                        <!--For Reason field adding the text area-->
+                        <template if:true={showReasonField}>
+
+
+                        <lightning-textarea
+                            label="Reason for Closing Lost"
+                            value={closedLostReason}
+                            onchange={handleReasonChange}>
+                        </lightning-textarea>
+
+
+                        </template>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeModal}>
+                        </lightning-button>
+
+
+                        <lightning-button variant="brand" label="Save" onclick={saveStage}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+
+
+            <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+        </template>
+
+
+        <template if:true={showOwnerModal}>
+
+
+    <section class="slds-modal slds-fade-in-open">
+
+
+        <div class="slds-modal__container">
+
+
+            <header class="slds-modal__header">
+
+
+                <h2 class="slds-text-heading_medium">
+
+
+                    Assign Owner
+
+
+                </h2>
+
+
+            </header>
+
+
+            <div class="slds-modal__content slds-p-around_medium">
+
+
+                <lightning-combobox
+                    label="Select Owner"
+                    value={selectedOwnerId}
+                    options={ownerOptions}
+                    onchange={handleOwnerChange}>
+                </lightning-combobox>
+
+
+            </div>
+
+
+            <footer class="slds-modal__footer">
+
+
+                <lightning-button
+                    label="Cancel"
+                    onclick={closeOwnerModal}>
+                </lightning-button>
+
+
+                <lightning-button
+                    class="slds-m-left_small"
+                    variant="brand"
+                    label="Save"
+                    onclick={saveOwner}>
+                </lightning-button>
+
+
+            </footer>
+
+
+        </div>
+
+
+    </section>
+
+
+    <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+</template>
+
+
+    </lightning-card>
+    </template>
+    <template if:true={selectedRecordId}>
+        <div class="slds-m-bottom_small">
+            <lightning-button
+                label="Back to List"
+                icon-name="utility:back"
+                variant="neutral"
+                onclick={handleBackToList}>
+            </lightning-button>
+        </div>
+        <c-opp-detailed record-id={selectedRecordId}></c-opp-detailed>
+    </template>
+</template>
