@@ -1,0 +1,64 @@
+<template>
+    <!-- Screen 1: The Input Form -->
+    <div class={formVisibilityClass}>
+        <lightning-record-edit-form 
+            object-api-name="Opportunity"
+            onsubmit={handleFormSubmit}
+            onsuccess={handleSuccess}>
+            
+            <lightning-messages></lightning-messages>
+            
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input-field field-name="Name" required></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input-field field-name="AccountId" value={recordId} required></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                    <lightning-input-field field-name="StageName" required></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="CloseDate" required></lightning-input-field>
+                </div>
+            </div>
+
+            <div class="slds-m-top_medium slds-text-align_right">
+                <lightning-button type="submit" variant="brand" label="Save Opportunity"></lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+
+    <!-- Screen 2: Duplicate Alert Warning Panel -->
+    <div class={warningVisibilityClass}>
+        <!-- Warning Message Banner -->
+        <div class="slds-notify slds-notify_alert slds-alert_warning slds-m-bottom_medium" role="alert">
+            <lightning-icon icon-name="utility:warning" size="small" alternative-text="Warning" class="slds-m-right_x-small"></lightning-icon>
+            <h2>An active Opportunity already exists.</h2>
+        </div>
+
+        <!-- Conflicting Records Table -->
+        <div class="slds-m-bottom_large">
+            <lightning-datatable
+                key-field="id"
+                data={duplicateOpps}
+                columns={columns}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+
+        <!-- Action Items for the User -->
+        <div class="slds-grid slds-grid_align-end">
+            <lightning-button 
+                label="Cancel Creation" 
+                onclick={handleCancel} 
+                class="slds-m-right_small">
+            </lightning-button>
+            <lightning-button 
+                label="Continue Anyway" 
+                variant="brand" 
+                onclick={executeSubmit}>
+            </lightning-button>
+        </div>
+    </div>
+</template>

@@ -1,4 +1,5 @@
-//Task 1: Update Inactive Accounts — Basic Requirement:
+//Task 1: Update Inactive Accounts — Basic
+// Requirement:
 // Find all Accounts where:
 // Active__c = false (This is a field having Yes or No into it)
 // Update Status__c = 'Inactive'  - make this as a custom field having picklist values Active as well as Inactive into it

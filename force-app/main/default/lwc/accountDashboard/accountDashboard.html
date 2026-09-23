@@ -1,0 +1,113 @@
+<template>
+    <lightning-card title="Account 360° Dashboard" icon-name="standard:account">
+        <template if:true={dashboardData}>
+            <div class="slds-p-around_small">
+
+                <!-- ===== KPIs ===== -->
+                <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium kpi-row">
+                    <div class="slds-col slds-size_1-of-5 kpi-tile">
+                        <p class="kpi-label">Total Revenue</p>
+                        <p class="kpi-value">{formattedTotalRevenue}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-5 kpi-tile">
+                        <p class="kpi-label">Total Open Opportunities</p>
+                        <p class="kpi-value">{dashboardData.kpis.totalOpenOpps}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-5 kpi-tile">
+                        <p class="kpi-label">Last Activity</p>
+                        <p class="kpi-value">{dashboardData.kpis.lastActivityDate}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-5 kpi-tile">
+                        <p class="kpi-label">Total Contacts</p>
+                        <p class="kpi-value">{dashboardData.kpis.totalContacts}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-5 kpi-tile kpi-tile-last">
+                        <p class="kpi-label">Average Deal Size</p>
+                        <p class="kpi-value">{formattedAvgDealSize}</p>
+                    </div>
+                </div>
+
+                <!-- ===== Account Details ===== -->
+                <lightning-card title="Account Details" class="slds-m-bottom_medium">
+                    <div class="slds-p-horizontal_small slds-p-bottom_small slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-4">
+                            <p class="field-label">Industry</p>
+                            <p class="field-value">{dashboardData.acc.Industry}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4">
+                            <p class="field-label">Rating</p>
+                            <p class="field-value">{dashboardData.acc.Rating}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4">
+                            <p class="field-label">Annual Revenue</p>
+                            <p class="field-value">{formattedAnnualRevenue}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4">
+                            <p class="field-label">Owner</p>
+                            <p class="field-value">{dashboardData.acc.Owner.Name}</p>
+                        </div>
+                    </div>
+                </lightning-card>
+
+                <!-- ===== Related Contacts ===== -->
+                <lightning-card title="Recent Contacts (Top 5)" class="slds-m-bottom_medium">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={dashboardData.contacts}
+                        columns={contactColumns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                    <template if:true={noContacts}>
+                        <p class="slds-p-around_small slds-text-color_weak">No contacts found.</p>
+                    </template>
+                </lightning-card>
+
+                <!-- ===== Open Opportunities ===== -->
+                <lightning-card title="Open Opportunities" class="slds-m-bottom_medium">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={dashboardData.opportunities}
+                        columns={oppColumns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                    <template if:true={noOpportunities}>
+                        <p class="slds-p-around_small slds-text-color_weak">No open opportunities.</p>
+                    </template>
+                </lightning-card>
+
+                <!-- ===== Recent Activities ===== -->
+                <lightning-card title="Recent Activities (Tasks / Events / Calls)" class="slds-m-bottom_medium">
+                    <lightning-datatable
+                        key-field="id"
+                        data={dashboardData.activities}
+                        columns={activityColumns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                    <template if:true={noActivities}>
+                        <p class="slds-p-around_small slds-text-color_weak">No recent activity.</p>
+                    </template>
+                </lightning-card>
+
+                <!-- ===== Cases ===== -->
+                <lightning-card title="Recent Open Cases">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={dashboardData.cases}
+                        columns={caseColumns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                    <template if:true={noCases}>
+                        <p class="slds-p-around_small slds-text-color_weak">No open cases.</p>
+                    </template>
+                </lightning-card>
+
+            </div>
+        </template>
+
+        <template if:true={error}>
+            <div class="slds-p-around_small slds-text-color_error">
+                Error loading dashboard: {error}
+            </div>
+        </template>
+    </lightning-card>
+</template>

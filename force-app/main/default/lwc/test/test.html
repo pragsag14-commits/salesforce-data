@@ -56,10 +56,5 @@
                 </template>
             </div>
         </template>
-
-        <template if:false={isKanbanView}>
-        <lightning-datatable key-field="Id" data={opportunities} columns={columns} onrowselection={handleRowSelection} onrowaction={handleRowAction}>
-        </lightning-datatable>
-        </template>
     </lightning-card>
 </template>

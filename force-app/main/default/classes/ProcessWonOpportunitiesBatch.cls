@@ -1,13 +1,3 @@
-// Task 4: Batch Apex with Error Handling
-// Requirement:
-// Process all Opportunities where:
-// StageName = 'Closed Won'
-// For every Opportunity:
-// Update Processed__c = true.
-// If any record fails to update, capture its:
-// Record Id
-// Error message
-// Store the error details in a custom object called Batch_Error__c
 public class ProcessWonOpportunitiesBatch implements Database.Batchable<sObject>{
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator('SELECT Id FROM Opportunity WHERE StageName = \'Closed Won\'');
