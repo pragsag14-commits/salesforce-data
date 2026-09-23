@@ -1,0 +1,137 @@
+<template>
+    <lightning-card>
+    <div class="slds-grid slds-wrap slds-gutters">
+       
+        <!-- Left Main Panel: Opportunity Fields from List View -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12 slds-m-bottom_medium">
+            <lightning-card title="Opportunity Detail" icon-name="standard:opportunity">
+                <div class="slds-p-around_medium">
+                    <lightning-record-view-form record-id={recordId} object-api-name="Opportunity" onload={handleOpportunityLoad}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 class-field-padding">
+                                <lightning-output-field field-name="Name"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 class-field-padding">
+                                <lightning-output-field field-name="AccountId"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 class-field-padding">
+                                <lightning-output-field field-name="StageName"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 class-field-padding">
+                                <lightning-output-field field-name="Amount"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 class-field-padding">
+                                <lightning-output-field field-name="Probability"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 class-field-padding">
+                                <lightning-output-field field-name="OwnerId"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 class-field-padding">
+                                <lightning-output-field field-name="CloseDate"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 class-field-padding">
+                                <lightning-output-field field-name="ExpectedRevenue"></lightning-output-field>
+                            </div>
+                        </div>
+                    </lightning-record-view-form>
+                </div>
+            </lightning-card>
+        </div>
+
+
+        <!-- Right Side Panel: Related Object Sections -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+               
+                <!-- 1. Account Details -->
+                <lightning-accordion-section name="account" label="Account Details">
+                    <template if:true={accountId}>
+                        <lightning-record-view-form record-id={accountId} object-api-name="Account">
+                            <lightning-output-field field-name="Name"></lightning-output-field>
+                            <lightning-output-field field-name="Type"></lightning-output-field>
+                            <lightning-output-field field-name="Industry"></lightning-output-field>
+                            <lightning-output-field field-name="Phone"></lightning-output-field>
+                            <lightning-output-field field-name="Website"></lightning-output-field>
+                        </lightning-record-view-form>
+                    </template>
+                    <template if:false={accountId}>
+                        <p class="slds-text-color_weak slds-p-around_small">No Account associated with this Opportunity.</p>
+                    </template>
+                </lightning-accordion-section>
+
+
+                <!-- 2. Contacts -->
+                <lightning-accordion-section name="contacts" label="Contacts">
+                    <template if:true={hasContacts}>
+                        <lightning-datatable
+                            key-field="id"
+                            data={contacts}
+                            columns={contactColumns}
+                            hide-checkbox-column>
+                        </lightning-datatable>
+                    </template>
+                    <template if:false={hasContacts}>
+                        <p class="slds-text-color_weak slds-p-around_small">No related contacts found.</p>
+                    </template>
+                </lightning-accordion-section>
+
+
+                <!-- 3. Products -->
+                <lightning-accordion-section name="products" label="Products">
+                    <template if:true={hasProducts}>
+                        <lightning-datatable
+                            key-field="id"
+                            data={products}
+                            columns={productColumns}
+                            hide-checkbox-column>
+                        </lightning-datatable>
+                    </template>
+                    <template if:false={hasProducts}>
+                        <p class="slds-text-color_weak slds-p-around_small">No products added to this Opportunity.</p>
+                    </template>
+                </lightning-accordion-section>
+
+
+                <!-- 4. Activities -->
+                <lightning-accordion-section name="activities" label="Activities">
+                    <template if:true={hasActivities}>
+                        <ul class="slds-has-dividers_bottom-space">
+                            <template for:each={activities} for:item="act">
+                                <li key={act.id} class="slds-item slds-p-vertical_x-small">
+                                    <div class="slds-text-heading_small">{act.subject}</div>
+                                    <div class="slds-text-color_weak slds-text-body_small">{act.activityDate} • {act.status}</div>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                    <template if:false={hasActivities}>
+                        <p class="slds-text-color_weak slds-p-around_small">No open activities or history found.</p>
+                    </template>
+                </lightning-accordion-section>
+
+
+                <!-- 5. Notes -->
+                <lightning-accordion-section name="notes" label="Notes">
+                    <template if:true={hasNotes}>
+                        <ul class="slds-has-dividers_bottom-space">
+                            <template for:each={notes} for:item="note">
+                                <li key={note.id} class="slds-item slds-p-vertical_x-small">
+                                    <div class="slds-text-heading_small">{note.title}</div>
+                                    <div class="slds-text-color_weak slds-text-body_small">{note.createdDate}</div>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                    <template if:false={hasNotes}>
+                        <p class="slds-text-color_weak slds-p-around_small">No notes attached.</p>
+                    </template>
+                </lightning-accordion-section>
+
+
+            </lightning-accordion>
+        </div>
+
+
+    </div>
+    </lightning-card>
+</template>

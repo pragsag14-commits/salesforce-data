@@ -1,0 +1,65 @@
+<template>
+    <lightning-card>
+        <lightning-layout class="slds-col slds-m-right_x-small">
+        <lightning-button-group class="slds-m-right_medium slds-m-bottom_small">
+            
+                    <lightning-button-icon icon-name="utility:list" variant={listViewVariant} onclick={switchToListView} alternative-text="List View"></lightning-button-icon>
+
+                    <lightning-button-icon icon-name="utility:kanban" variant={kanbanViewVariant} onclick={switchToKanbanView} alternative-text="Kanban View"></lightning-button-icon>
+
+                </lightning-button-group>
+
+        </lightning-layout>
+
+        <!-- NEW: KANBAN VIEW -->
+        <template if:true={isKanbanView}>
+             <div class="kanban-container slds-m-around_small">
+                <template for:each={kanbanColumns} for:item="col">
+                    <div key={col.value} class="kanban-column slds-m-right_small">
+                
+                    <!-- Column Header -->
+                    <div class="kanban-column-header slds-grid slds-grid_align-spread">
+                        <span>{col.label}</span>
+                        <span class="slds-badge">{col.count}</span>
+                    </div>
+
+                    <!-- Column Body (Drop Zone) -->
+                    <div class="kanban-column-body" 
+                        data-stage={col.value} 
+                        ondrop={handleDrop} 
+                        ondragover={handleDragOver} 
+                        ondragleave={handleDragLeave}>
+                    
+                    <!-- Draggable Cards -->
+                    <template for:each={col.records} for:item="rec">
+                        <div key={rec.Id} class="kanban-card" 
+                            draggable="true" 
+                            data-id={rec.Id} 
+                            ondragstart={handleDragStart}
+                            onclick={handleKanbanCardClick}>
+                            
+                            <div class="kanban-card-title">{rec.Name}</div>
+                            <div class="slds-text-body_small slds-m-bottom_xx-small">{rec.AccountName}</div>
+                            
+                            <div class="slds-grid slds-grid_align-spread slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                <span>{rec.OwnerName}</span>
+                                <span>{rec.ProbabilityDisplay}</span>
+                            </div>
+                            <div class="slds-text-heading_small slds-m-top_xx-small">
+                                <strong>₹{rec.Amount}</strong>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                
+                </div>
+                </template>
+            </div>
+        </template>
+
+        <template if:false={isKanbanView}>
+        <lightning-datatable key-field="Id" data={opportunities} columns={columns} onrowselection={handleRowSelection} onrowaction={handleRowAction}>
+        </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>
