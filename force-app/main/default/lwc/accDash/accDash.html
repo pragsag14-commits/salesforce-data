@@ -1,0 +1,87 @@
+<template>
+    <lightning-card title="Account 360° Dashboard" icon-name="standard:account">
+        
+        <!-- App Builder Preview Mode Notice -->
+        <template if:true={hasNoRecordId}>
+            <div class="slds-p-around_medium slds-illustration slds-illustration_small">
+                <div class="slds-text-heading_small slds-m-bottom_x-small">Account 360° Dashboard Ready</div>
+                <div class="slds-text-body_regular slds-text-color_weak">
+                    Save and view this component on an active <strong>Account Record Page</strong> to load live dynamic data.
+                </div>
+            </div>
+        </template>
+
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <template if:false={hasNoRecordId}>
+                <div class="slds-p-around_large slds-align_absolute-center">
+                    <lightning-spinner alternative-text="Loading Dashboard Data..." size="medium"></lightning-spinner>
+                </div>
+            </template>
+        </template>
+
+        <!-- Fixed SLDS Error Alert Banner -->
+        <template if:true={error}>
+            <div class="slds-p-around_medium">
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small">
+                        <lightning-icon icon-name="utility:error" variant="inverse" size="x-small"></lightning-icon>
+                    </span>
+                    <h2>Error Loading Data: {error}</h2>
+                </div>
+            </div>
+        </template>
+
+        <!-- Main Dashboard View -->
+        <template if:true={dashboardData}>
+            <div class="slds-p-around_medium">
+                <!-- Top Key Metrics -->
+                <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                    <div class="slds-col slds-size_1-of-4">
+                        <div class="slds-box slds-text-align_center">
+                            <span class="slds-text-color_weak">Annual Revenue</span>
+                            <h2 class="slds-text-heading_medium">{dashboardData.account.AnnualRevenueFormatted}</h2>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <div class="slds-box slds-text-align_center">
+                            <span class="slds-text-color_weak">Open Pipeline</span>
+                            <h2 class="slds-text-heading_medium">{dashboardData.totalPipelineValue}</h2>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <div class="slds-box slds-text-align_center">
+                            <span class="slds-text-color_weak">Open Deals</span>
+                            <h2 class="slds-text-heading_medium">{dashboardData.openDealsCount}</h2>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <div class="slds-box slds-text-align_center">
+                            <span class="slds-text-color_weak">Open Cases</span>
+                            <h2 class="slds-text-heading_medium">{dashboardData.openCasesCount}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Info -->
+                <div class="slds-box slds-m-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Account Information</h3>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <p><strong>Type:</strong> {dashboardData.account.Type}</p>
+                            <p><strong>Industry:</strong> {dashboardData.account.Industry}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <p><strong>Rating:</strong> {dashboardData.account.Rating}</p>
+                            <p><strong>Phone:</strong> {dashboardData.account.Phone}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <p><strong>Website:</strong> {dashboardData.account.Website}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+    </lightning-card>
+</template>

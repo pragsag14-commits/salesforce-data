@@ -1,0 +1,64 @@
+<template>
+    <template if:true={contacts.length}>
+        <div class="slds-box slds-theme_default slds-scrollable_x">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th scope="col">
+                            <div class="slds-truncate" title="Contact Name">Contact Name</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Title">Title</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Phone">Phone</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Email">Email</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Actions">Actions</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={contacts} for:item="con">
+                        <tr key={con.Id}>
+                            <td>
+                                <div class="slds-truncate">
+                                    <strong>{con.Name}</strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{con.Title}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{con.Phone}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{con.Email}</div>
+                            </td>
+                            <td>
+                                <!-- Row action buttons targeting individual record IDs -->
+                                <lightning-button-icon 
+                                    icon-name="utility:edit" 
+                                    data-id={con.Id} 
+                                    onclick={onEditClick} 
+                                    title="Edit Contact" 
+                                    class="slds-m-right_xx-small">
+                                </lightning-button-icon>
+                                <lightning-button-icon 
+                                    icon-name="utility:delete" 
+                                    variant="error" 
+                                    data-id={con.Id} 
+                                    onclick={onDeleteClick} 
+                                    title="Delete Contact">
+                                </lightning-button-icon>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </template>
+</template>

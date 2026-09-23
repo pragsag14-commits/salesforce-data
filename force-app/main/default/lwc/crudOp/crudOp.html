@@ -1,0 +1,44 @@
+<template>
+
+    <lightning-card title="Single Account CRUD">
+
+        <div class="slds-p-around_medium">
+
+            <lightning-input
+                label="Account Name"
+                value={name}
+                onchange={handleName}>
+            </lightning-input>
+
+            <lightning-input
+                label="Phone"
+                value={phone}
+                onchange={handlePhone}>
+            </lightning-input>
+
+            <br/>
+
+            <lightning-button
+                label="Create Account"
+                variant="brand"
+                onclick={createAccount}>
+            </lightning-button>
+
+            <lightning-button
+                label="Update Account"
+                class="slds-m-left_small"
+                onclick={updateAccount}>
+            </lightning-button>
+
+            <lightning-button
+                label="Delete Account"
+                variant="destructive"
+                class="slds-m-left_small"
+                onclick={deleteAccount}>
+            </lightning-button>
+
+        </div>
+
+    </lightning-card>
+
+</template>

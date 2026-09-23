@@ -1,0 +1,141 @@
+<template>
+
+    <lightning-card>
+        <div class="slds-grid slds-grid_align-spread">
+
+            <h1 class="slds-col slds-m-left_x-small">Opportunity Management System</h1>
+
+            <lightning-layout class="slds-col slds-m-right_x-small">
+                <lightning-button class="lightning-button-space" label="Update Stage" variant="brand"
+                    onclick={handleStage}> </lightning-button>
+                <lightning-button class="lightning-button-space" label="Assign Owner" variant="neutral"
+                    onclick={handleOwner}> </lightning-button>
+                <lightning-button class="lightning-button-space" label="Delete" variant="destructive"
+                    onclick={handleDelete}> </lightning-button>
+                <lightning-button class="lightning-button-space" label="Export" variant="neutral"
+                    onclick={handleExport}> </lightning-button>
+            </lightning-layout>
+
+        </div>
+
+        <div class="slds-grid slds-grid_align-end">
+
+            <!-- <lightning-input class="slds-col slds-m-left_x-small" type="search" label="" variant="label-hidden" placeholder="Search Opportunities..."
+                oninput={handleSearch}>
+                </lightning-input> -->
+            <lightning-input type="search" variant="label-hidden" placeholder="Search Opportunities..."
+                value={searchKey} onkeyup={handleSearch}>
+            </lightning-input>
+
+
+            <!-- <div class="slds-col slds-m-right_x-small">
+                <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" onclick={handleRefresh}>
+                </lightning-button-icon>
+ 
+                <lightning-button-icon icon-name="utility:filterList" alternative-text="Filters"
+                    onclick={handleFilters}>
+                </lightning-button-icon>
+ 
+                <lightning-button-icon icon-name="utility:download" alternative-text="Export" onclick={handleExport}>
+                </lightning-button-icon>
+            </div> -->
+
+        </div>
+
+
+
+        <lightning-datatable key-field="Id" data={opportunities} columns={columns} onrowselection={handleRowSelection}>
+        </lightning-datatable>
+
+        <template if:true={showStageModal}>
+            <section class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">
+                            Update Opportunity Stage
+                        </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-combobox label="Select Stage" value={selectedStage} options={stageOptions}
+                            onchange={handleStageChange}>
+                        </lightning-combobox>
+                        
+                        <!--For Reason field adding the text area-->
+                        <template if:true={showReasonField}>
+
+                        <lightning-textarea
+                            label="Reason for Closing Lost"
+                            value={closedLostReason}
+                            onchange={handleReasonChange}>
+                        </lightning-textarea>
+
+                        </template>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeModal}>
+                        </lightning-button>
+
+                        <lightning-button variant="brand" label="Save" onclick={saveStage}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+
+            <div class="slds-backdrop slds-backdrop_open"></div>
+
+        </template>
+
+        <template if:true={showOwnerModal}>
+
+    <section class="slds-modal slds-fade-in-open">
+
+        <div class="slds-modal__container">
+
+            <header class="slds-modal__header">
+
+                <h2 class="slds-text-heading_medium">
+
+                    Assign Owner
+
+                </h2>
+
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium">
+
+                <lightning-combobox
+                    label="Select Owner"
+                    value={selectedOwnerId}
+                    options={ownerOptions}
+                    onchange={handleOwnerChange}>
+                </lightning-combobox>
+
+            </div>
+
+            <footer class="slds-modal__footer">
+
+                <lightning-button
+                    label="Cancel"
+                    onclick={closeOwnerModal}>
+                </lightning-button>
+
+                <lightning-button
+                    class="slds-m-left_small"
+                    variant="brand"
+                    label="Save"
+                    onclick={saveOwner}>
+                </lightning-button>
+
+            </footer>
+
+        </div>
+
+    </section>
+
+    <div class="slds-backdrop slds-backdrop_open"></div>
+
+</template>
+
+    </lightning-card>
+
+</template>

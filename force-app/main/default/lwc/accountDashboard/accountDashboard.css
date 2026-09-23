@@ -1,0 +1,42 @@
+.kpi-row {
+    background-color: #fafaf9;
+    border-radius: 6px;
+    padding: 12px 0;
+}
+
+.kpi-tile {
+    text-align: center;
+    border-right: 1px solid #dddbda;
+    padding: 4px 8px;
+}
+
+.kpi-tile-last {
+    border-right: none;
+}
+
+.kpi-label {
+    font-size: 0.72rem;
+    color: #706e6b;
+    text-transform: uppercase;
+    letter-spacing: 0.02rem;
+    margin-bottom: 4px;
+}
+
+.kpi-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #16325c;
+}
+
+.field-label {
+    font-size: 0.72rem;
+    color: #706e6b;
+    text-transform: uppercase;
+    margin-top: 8px;
+}
+
+.field-value {
+    font-size: 0.9rem;
+    color: #16325c;
+    margin-bottom: 4px;
+}

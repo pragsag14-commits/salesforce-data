@@ -1,0 +1,41 @@
+.kpi-container {
+    background-color: #f9f9fa;
+    border-radius: 4px;
+}
+
+.kpi-border {
+    border-right: 1px solid #e0e0e0;
+}
+
+.kpi-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #514f4d;
+    letter-spacing: 0.05em;
+}
+
+.kpi-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #032d60;
+    margin-top: 4px;
+}
+
+.section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #032d60;
+}
+
+.detail-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #706e6b;
+    display: block;
+}
+
+.detail-value {
+    font-size: 0.9rem;
+    color: #181818;
+    margin-top: 2px;
+}

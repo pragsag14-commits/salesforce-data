@@ -1,10 +1,3 @@
-// Task 2: Delete Old Leads
-// Requirement:
-// Find Leads that:
-// Have not been modified for more than 2 years
-// Are not converted
-// Delete them using Batch Apex.
-
 public class DeleteTodayLeadsBatch implements Database.Batchable<sObject> {
 
     // 1. start(): Queries unconverted Leads created today

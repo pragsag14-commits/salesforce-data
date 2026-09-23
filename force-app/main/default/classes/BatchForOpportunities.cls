@@ -7,7 +7,7 @@ public class BatchForOpportunities implements Database.Batchable<sObject> {
         String query = 'SELECT Id FROM Opportunity';//when we have to pass this query in the string then we need to give single quotes into it
         //Database.query(query); //because of governor limits this might fall short t
         return Database.getQueryLocator(query);    //Database.QueryLocator - record retriever fetch data from database and passes into the chunks 
-        
+
     }
 
     public void execute(Database.BatchableContext context, List<Opportunity> opp){

@@ -1,16 +1,3 @@
-// Task 6: Batch Apex with Stateful
-// Requirement:
-// Process all Opportunities.
-// During each batch:
-// Count the number of successfully processed Opportunities.
-// Count the number of failed Opportunities.
-// After the entire batch completes, send an email summary:
-// Total Successful: 950
-// Total Failed: 50
-// Practice concepts:
-// Database.Stateful
-// Variables across transactions
-// finish()
 global class OpportunityBatch implements
     Database.Batchable<SObject>, Database.Stateful {
 
@@ -30,6 +17,7 @@ global class OpportunityBatch implements
     // 2. EXECUTE METHOD
     global void execute(Database.BatchableContext bc, List<Opportunity> scope
     ) {
+        // Example: processing the Opportunities
         for (Opportunity opp : scope) {
             opp.Description = 'Processed by Batch Apex';
         }
