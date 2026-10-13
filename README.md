@@ -1,49 +1,51 @@
-# Salesforce DX Project
+# Salesforce Learning
 
-Salesforce DX is a development approach that brings source-driven development, team collaboration, and continuous integration to the Salesforce Platform. Instead of working directly in an org through a web browser, you work with metadata as source files in a local DX project, track changes in version control, and deploy through automated processes.
+This code depicts the practice I have done in Salesforce. Following is the data date wise that consists of update I have done it on the regular basis.
 
-This project template gets you started with the tools and structure you need to build Salesforce applications using source control, scratch orgs, and the Salesforce CLI.
+## Datewise Update:-
+   5/10/2026
+   1. Started to look into revenue lifecycle management.
 
-## Prerequisites
-## Todays Update:-
-   learned git basic
+   2. Walked through the core objects included in Revenue Cloud.
 
-Before you start, make sure you have:
+   3. Looked into the concepts and building blocks of Product Catalogue Management.
 
-- **Salesforce CLI** - Download from [developer.salesforce.com/tools/salesforcecli](https://developer.salesforce.com/tools/salesforcecli). See [Install Salesforce CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm) for details.
-- **VS Code with Salesforce Extension Pack** - See [Installation Instructions](https://developer.salesforce.com/docs/platform/sfvscode-extensions/guide/install.html) for details. Includes the Agentforce Vibes extension.
-- **A development org** - Sign up for a free Developer Edition org [here](https://developer.salesforce.com/signup).
-- **Dev Hub enabled** (optional, required to create scratch orgs) - You can enable Dev Hub in your development org under Setup > Dev Hub.  See [Provide Developers Access to Salesforce DX Tools](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_setup_dx_tools.htm).
+   4. Created Products in Product Catalogue Management.
 
-## Project Structure
+   6/10/2026
+   1. Was stuck a bit during the creation of Product.
 
-Your DX project follows this structure:
+   2. Created a Product for Product Catalog Management.
 
-- **`force-app/main/default/`** - Your metadata source files live in this default package directory. You can configure additional package directories in the `sfdx-project.json` file.
-- **`config/`** - Scratch org definitions and project settings
-- **`scripts/`** - Automation scripts for common tasks
-- **`sfdx-project.json`** - Project manifest that defines package directories, namespace, API version, and other project-level settings
+   3. Understood the Product Discovery Settings for the same.
 
-See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm).
+   7/10/2026
+   1. Looked how the Salesforce can be connected to the Postman and vice versa.
 
-## Get Started
+   2. Looked into various configuration settings in Quote as Product was not visible in the catalog.
 
-Ready to start developing? The [Get Started with Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_get_started_dx.htm) guide walks you through your first project, from creating a scratch org to creating a simple Apex class or LWC to deploying your code to a sandbox.
+   3. Looked how include/exclude values work in Attribute Definition.
 
-## Common Salesforce CLI Commands
+   8/10/2026
+   1. Learnt about Price Management in Revenue Cloud.
 
-Here are common CLI commands that you'll use the most:
+   2. Explored Product Selling Model and Price Books.
 
-- `sf org login web`: Authorize an org
-- `sf org open`: Open your org in a browser
-- `sf org create scratch`: Create a scratch org
-- `sf project deploy start`: Deploy metadata to your org
-- `sf project retrieve start`: Retrieve metadata from your org
-- `sf template generate <artifact>`: Scaffold new components, such as Apex classes and triggers, LWC components, Lightning apps, and more
-- `sf apex <command>`: Run Apex tests, run anonymous Apex blocks, and view logs
-- `sf data <command>`: Work with test data
-- `sf alias <command>`: Manage org aliases
-- `sf config <command>`: Configure CLI settings
+   3. Understood the Pricing Waterfall requirement in revenue cloud.
+
+   4. Created a Pricing Procedure in Revenue Cloud.
+
+   9/10/2026
+   I have understood terms in integration through the document given by Sonali Ma'am.
+
+   I have looked into the Revenue Cloud topic that is Product Selling Model and Pricing Procedure.
+
+   12/10/2026
+   1. The GET and POST request part through the Postman.
+
+   2. I have added the volume as well as the manual discount in the Product Selling Model.
+
+   3. I also took the basic understanding of the pricing part.
 
 ## Use Agentforce Vibes to Build Lightning Apps
 
@@ -57,4 +59,3 @@ Transform your ideas into custom Lightning apps that extend CRM workflows direct
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/)
 - [Salesforce CLI Plugin Development Guide](https://developer.salesforce.com/docs/platform/salesforce-cli-plugin/guide/conceptual-overview.html)
 - [Salesforce VS Code Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-
