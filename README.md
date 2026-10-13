@@ -47,6 +47,13 @@ This code depicts the practice I have done in Salesforce. Following is the data 
 
    3. I also took the basic understanding of the pricing part.
 
+   13/10/2026
+   1. Implemented the Attribute-Based Pricing through existing Pricing Procedures.
+
+   2. Implemented the Derived Pricing and created new Pricing Procedure.
+
+   3. Resolved an issue while creating the new Pricing procedure.
+
 ## Use Agentforce Vibes to Build Lightning Apps
 
 Transform your ideas into custom Lightning apps that extend CRM workflows directly in Lightning Experience. Through natural conversations with Agentforce Vibes, implement custom objects and fields, complex business logic, and dynamic UI components. See [Build a Lightning App Using Agentforce Vibes](https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/lexapp-overview.html).
