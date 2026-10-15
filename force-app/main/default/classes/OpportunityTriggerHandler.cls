@@ -2,6 +2,9 @@ public class OpportunityTriggerHandler {
     //Description, Amount as well as LeadSource 
     public static void handleBeforeInsert(List<Opportunity> newOpp){
         for(Opportunity opp: newOpp){
+            //if (opp.By_Pass_Trigger__c) {
+                //continue; // Skips the trigger logic for this record
+            //}
             if(String.isBlank(opp.Description)){
                 opp.Description = 'Opportunity created through Salesforce';
             }
